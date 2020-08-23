@@ -16,7 +16,7 @@
 
 import unittest
 
-from solutions import app
+from app import app
 
 class TestApp(unittest.TestCase):
     """Unit tests for app.py."""
