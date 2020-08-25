@@ -97,7 +97,7 @@ class TestApp(unittest.TestCase):
         self.assertIn('multiply 6 and 7', result_page_text)
         self.assertIn('result is: 42', result_page_text)
 
-    def test_calculator_multiply(self):
+    def test_calculator_divide(self):
         res = app.test_client().get('/calculator_results?operand1=6&operand2=3&operation=divide')
         self.assertEqual(res.status_code, 200)
 
