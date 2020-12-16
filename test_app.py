@@ -105,29 +105,29 @@ class TestApp(unittest.TestCase):
         self.assertIn('divide 6 and 3', result_page_text)
         self.assertIn('result is: 2', result_page_text)
 
-    def test_compliments_3(self):
-        res = app.test_client().get('/compliments_results?users_name=Ducky&wants_compliments=yes&num_compliments=3')
+    def test_horoscope_aries(self):
+        res = app.test_client().get('/horoscope_results?users_name=Ducky&horoscope_sign=aries')
         self.assertEqual(res.status_code, 200)
+        random.seed(1)
 
         result_page_text = res.get_data(as_text=True)
         self.assertIn('Ducky', result_page_text)
-        self.assertEqual(3, result_page_text.count('<li>'))
+        self.assertIn('aries', result_page_text)
+        self.assertIn('Adventurous and energetic', result_page_text)
+        self.assertIn('18', result_page_text)
 
-    def test_compliments_5(self):
-        res = app.test_client().get('/compliments_results?users_name=Moxie&wants_compliments=yes&num_compliments=5')
+    def test_horoscope_taurus(self):
+        res = app.test_client().get('/horoscope_results?users_name=Moxie&horoscope_sign=aries')
         self.assertEqual(res.status_code, 200)
+        random.seed(3)
 
         result_page_text = res.get_data(as_text=True)
         self.assertIn('Moxie', result_page_text)
-        self.assertEqual(5, result_page_text.count('<li>'))
+        self.assertIn('taurus', result_page_text.lower())
+        self.assertIn('Patient and reliable', result_page_text)
+        self.assertIn('31', result_page_text)
 
-    def test_compliments_none(self):
-        res = app.test_client().get('/compliments_results?users_name=Moxie&wants_compliments=no&num_compliments=3')
-        self.assertEqual(res.status_code, 200)
 
-        result_page_text = res.get_data(as_text=True)
-        self.assertIn('Moxie', result_page_text)
-        self.assertNotIn('<li>', result_page_text)
 
 if __name__ == '__main__':
     unittest.main()
