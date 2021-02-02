@@ -119,19 +119,20 @@ def horoscope_results():
     """Shows the user the result for their chosen horoscope."""
 
     # TODO: Get the sign the user entered in the form, based on their birthday
-    horoscope_sign = ''
+    horoscope_sign = request.args.get('horoscope_sign')
 
     # TODO: Look up the user's personality in the HOROSCOPE_PERSONALITIES
     # dictionary based on what the user entered
-    users_personality = ''
+    users_personality = HOROSCOPE_PERSONALITIES[horoscope_sign]
 
     # TODO: Generate a random number from 1 to 99
-    lucky_number = 0
+    lucky_number = random.randint(1, 99)
 
     context = {
-        'horoscope_sign': horoscope_sign,
-        'personality': users_personality, 
-        'lucky_number': lucky_number
+        'users_name' : request.args.get('users_name'),
+        'horoscope_sign' : horoscope_sign,
+        'personality' : users_personality, 
+        'lucky_number' : lucky_number
     }
 
     return render_template('horoscope_results.html', **context)
