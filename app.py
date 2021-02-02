@@ -74,39 +74,25 @@ def message_results():
 @app.route('/calculator')
 def calculator():
     """Shows the user a form to enter 2 numbers and an operation."""
-    return """
-    <form action="/calculator_results" method="GET">
-        Please enter 2 numbers and select an operator.<br/><br/>
-        <input type="number" name="operand1">
-        <select name="operation">
-            <option value="add">+</option>
-            <option value="subtract">-</option>
-            <option value="multiply">*</option>
-            <option value="divide">/</option>
-        </select>
-        <input type="number" name="operand2">
-        <input type="submit" value="Submit!">
-    </form>
-    """
+    return render_template('calculator_form.html')
 
 @app.route('/calculator_results')
 def calculator_results():
     """Shows the user the result of their calculation."""
-    users_operand1 = request.args.get('operand1')
-    users_operand2 = request.args.get('operand2')
-    users_operation = request.args.get('operation')
-    result = 0
+    users_operand1 = int(request.args.get('operand1'))
+    users_operand2 = int(request.args.get('operand2'))
 
-    if users_operation == "add":
-        result = int(users_operand1) + int(users_operand2)
-    elif users_operation == "subtract":
-        result = int(users_operand1) - int(users_operand2)
-    elif users_operation == "multiply":
-        result = int(users_operand1) * int(users_operand2)
-    else:
-        result = int(users_operand1) / int(users_operand2)
+    context = {
+        'users_operand1' : request.args.get('operand1'),
+        'users_operand2' : request.args.get('operand2'),
+        'users_operation' : request.args.get('operation'),
+        'result_add' : users_operand1 + users_operand2,
+        'result_subtract' : users_operand1 - users_operand2,
+        'result_multiply' : users_operand1 * users_operand2,
+        'result_divide' : users_operand1 / users_operand2
+    }
 
-    return f"You chose to add {users_operand1} and {users_operand2}. Your result is: {result}"
+    return render_template('calculator_results.html', **context)
 
 HOROSCOPE_PERSONALITIES = {
     'aries': 'Adventurous and energetic',
